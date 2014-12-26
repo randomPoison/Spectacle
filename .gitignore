@@ -1,3 +1,6 @@
+# Directories
+external
+
 # Compiled Object files
 *.slo
 *.lo
