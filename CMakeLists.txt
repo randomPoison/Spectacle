@@ -20,7 +20,8 @@ get_directory_property(GUNSHIP_INCLUDE_DIRS
 
 # The project's sources
 file(GLOB PROJECT_SOURCES
-     source/Spectacle.cpp)
+     source/Spectacle.cpp
+     source/Components/*.cpp)
 
 # configure executable
 add_executable (Spectacle ${PROJECT_SOURCES})
