@@ -3,13 +3,15 @@
 #include <Engine.h>
 #include <Components/Transform.h>
 #include <Components/Camera.h>
-#include <Components/FollowTargetLinear.h>
 #include <Components/Mesh.h>
 #include <Components/Light.h>
-#include <Components/Player.h>
-#include <Components/PlayerCursor.h>
-#include <Systems/FollowTargetLinearSystem.h>
-#include <Systems/PlayerMovementSystem.h>
+
+#include "Components/Player.h"
+#include "Components/PlayerCursor.h"
+#include "Components/FollowTargetLinear.h"
+#include "Systems/FollowTargetLinearSystem.h"
+#include "Systems/PlayerMovementSystem.h"
+#include "Systems/PlayerGunSystem.h"
 
 namespace Spectacle
 {
@@ -18,6 +20,7 @@ namespace Spectacle
 		// add systems to scene
 		scene.AddSystem< PlayerMovementSystem >();
 		scene.AddSystem< FollowTargetLinearSystem >();
+		scene.AddSystem< PlayerGunSystem >();
 
 		// PLAYER OBJECT
 		entityx::Entity player = scene.CreateGameObject();
@@ -33,7 +36,7 @@ namespace Spectacle
 			cursor.assign< Gunship::Transform >( scene );
 		cursorTransform->SetScale( 0.3f, 0.3f, 0.3f );
 		cursor.assign< Gunship::Mesh >( scene, cursorTransform, "Cube.mesh" );
-		cursor.assign< PlayerCursor >( playerTransform );
+		cursor.assign< PlayerCursor >( playerTransform, 0.01f );
 
 		// CAMERA
 		entityx::Entity camera = scene.CreateGameObject();
