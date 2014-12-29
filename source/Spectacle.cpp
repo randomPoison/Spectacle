@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <Engine.h>
+#include <Mouse.h>
 #include <Components/Transform.h>
 #include <Components/Camera.h>
 #include <Components/Mesh.h>
@@ -17,6 +18,8 @@ namespace Spectacle
 {
 	void InitializeScene( Gunship::Scene& scene )
 	{
+		Gunship::Mouse::SetRelativeMode( true );
+
 		// add systems to scene
 		scene.AddSystem< PlayerMovementSystem >();
 		scene.AddSystem< FollowTargetLinearSystem >();
@@ -34,6 +37,7 @@ namespace Spectacle
 		entityx::Entity cursor = scene.CreateGameObject();
 		Gunship::Transform::Handle cursorTransform =
 			cursor.assign< Gunship::Transform >( scene );
+		playerTransform->AddChild( cursorTransform );
 		cursorTransform->SetScale( 0.3f, 0.3f, 0.3f );
 		cursor.assign< Gunship::Mesh >( scene, cursorTransform, "Cube.mesh" );
 		cursor.assign< PlayerCursor >( playerTransform, 0.01f );
