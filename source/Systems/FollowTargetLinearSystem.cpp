@@ -16,10 +16,10 @@ namespace Spectacle
 			entity.unpack< FollowTargetLinear >( followTarget );
 			entity.unpack< Gunship::Transform >( transform );
 			Ogre::Vector3 desiredPostition = followTarget->desiredPosition();
-			Ogre::Vector3 resultPosition = Ogre::Math::lerp( transform->node->_getDerivedPosition(),
+			Ogre::Vector3 resultPosition = Ogre::Math::lerp( transform->position(),
 			                                                 desiredPostition,
 			                                                 followTarget->followSpeed * delta );
-			transform->node->_setDerivedPosition( resultPosition );
+			transform->position( resultPosition );
 		}
 	}
 }

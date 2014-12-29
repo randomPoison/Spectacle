@@ -11,5 +11,5 @@ Spectacle::FollowTargetLinear::FollowTargetLinear( Gunship::Transform::Handle ta
 
 Ogre::Vector3 Spectacle::FollowTargetLinear::desiredPosition()
 {
-	return targetTransform->node->_getDerivedPosition() + offset;
+	return targetTransform->derivedPosition() + offset;
 }

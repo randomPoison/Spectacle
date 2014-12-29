@@ -19,22 +19,22 @@ namespace Spectacle
 
 			if ( Gunship::Input::KeyDown( SDL_SCANCODE_D ) )
 			{
-				transform->node->translate( Ogre::Vector3::UNIT_X * player->moveSpeed * delta );
+				transform->Translate( Gunship::Vector3::UNIT_X * player->moveSpeed * delta );
 			}
 			if ( Gunship::Input::KeyDown( SDL_SCANCODE_A ) )
 			{
-				transform->node->translate( Ogre::Vector3::NEGATIVE_UNIT_X * player->moveSpeed * delta );
+				transform->Translate( Gunship::Vector3::NEGATIVE_UNIT_X * player->moveSpeed * delta );
 			}
 			if ( Gunship::Input::KeyDown( SDL_SCANCODE_W ) )
 			{
-				transform->node->translate( Ogre::Vector3::UNIT_Y * player->moveSpeed * delta );
+				transform->Translate( Gunship::Vector3::UNIT_Y * player->moveSpeed * delta );
 			}
 			if ( Gunship::Input::KeyDown( SDL_SCANCODE_S ) )
 			{
-				transform->node->translate( Ogre::Vector3::NEGATIVE_UNIT_Y * player->moveSpeed * delta );
+				transform->Translate( Gunship::Vector3::NEGATIVE_UNIT_Y * player->moveSpeed * delta );
 			}
 
-			transform->node->_getDerivedPositionUpdated();
+//			transform->node->_getDerivedPositionUpdated();
 		}
 	}
 }
