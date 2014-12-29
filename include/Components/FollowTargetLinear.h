@@ -7,13 +7,13 @@
 
 namespace Spectacle
 {
-	struct FollowTarget : public entityx::Component< FollowTarget >
+	struct FollowTargetLinear : public entityx::Component< FollowTargetLinear >
 	{
 		Gunship::Transform::Handle targetTransform;
 		Ogre::Vector3 offset;
 		float followSpeed;
 
-		FollowTarget( Gunship::Transform::Handle target,
+		FollowTargetLinear( Gunship::Transform::Handle target,
 		              Ogre::Vector3 offset = Ogre::Vector3::ZERO,
 		              float followSpeed = 10.0f );
 

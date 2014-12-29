@@ -21,8 +21,11 @@ namespace Spectacle
 		{
 			Gunship::Transform::Handle transform;
 			Player::Handle player;
-			for ( entityx::Entity entity : entities.entities_with_components( transform, player ) )
+			for ( auto entity : entities.entities_with_components< Gunship::Transform, Player >() )
 			{
+				entity.unpack< Gunship::Transform >( transform );
+				entity.unpack< Player >( player );
+
 				if ( Gunship::Input::KeyDown( SDL_SCANCODE_D ) )
 				{
 					transform->node->translate( Ogre::Vector3::UNIT_X * player->moveSpeed * delta );
@@ -45,29 +48,11 @@ namespace Spectacle
 		}
 	};
 
-	struct CameraFollowSystem : public Gunship::System< CameraFollowSystem, Gunship::BehaviorSystemBase >
-	{
-		void Update( entityx::EntityManager& entities,
-					 float delta ) override
-		{
-			FollowTarget::Handle followTarget;
-			Gunship::Transform::Handle transform;
-			for ( entityx::Entity entity : entities.entities_with_components( followTarget, transform ) )
-			{
-				Ogre::Vector3 desiredPostition = followTarget->desiredPosition();
-				Ogre::Vector3 resultPosition = Ogre::Math::lerp( transform->node->_getDerivedPosition(),
-																 desiredPostition,
-																 followTarget->followSpeed * delta );
-				transform->node->_setDerivedPosition( resultPosition );
-			}
-		}
-	};
-
 	void InitializeScene( Gunship::Scene& scene )
 	{
 		// add systems to scene
 		scene.AddSystem< PlayerMovementSystem >();
-		scene.AddSystem< CameraFollowSystem >();
+		scene.AddSystem< FollowTargetLinearSystem >();
 
 		entityx::Entity camera = scene.CreateGameObject();
 		Gunship::Transform::Handle cameraTransform = camera.assign<
@@ -85,7 +70,7 @@ namespace Spectacle
 		cube.assign< Gunship::Mesh >( scene, cubeTransform, "Cube.mesh" );
 		cube.assign< Player >( 10.0f );
 
-		camera.assign< FollowTarget >( cubeTransform, Ogre::Vector3( 0.0f, 0.0f, 30.0f ), 5.0f );
+		camera.assign< FollowTargetLinear >( cubeTransform, Ogre::Vector3( 0.0f, 0.0f, 30.0f ), 5.0f );
 
 		entityx::Entity light = scene.CreateGameObject();
 		Gunship::Transform::Handle lightTransform =
