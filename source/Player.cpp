@@ -1,49 +1,38 @@
-#include "Spectacle.h"
+#include <Scene.h>
+#include <Components/Transform.h>
+#include <Components/Mesh.h>
 
-static const float BULLET_DELAY = 0.1f;
-static const float PLAYER_BASE_SPEED = 10.0f;
+#include "Player.h"
+#include "Components/Player.h"
+#include "Components/PlayerCursor.h"
 
-void MakePlayer( GameObject& player, GameObject& target )
+namespace Spectacle
 {
-	player.AddMesh( "playerMesh", "ColourCube" );
-	player.AddCollider( 1.0f );
-	player.SetPosition( 0.0f, 0.0f, 0.0f );
-	player.AddBehavior(
-		[ &target ]( GameObject& player, Scene& scene, const Input& input, float delta )
-		{
-			static float cooldown = 0.0f;
+	entityx::Entity CreatePlayer( Gunship::Scene& scene )
+	{
+		entityx::Entity player = scene.CreateGameObject();
 
-			float xTrans = input.AxisValue( 0, SDL_CONTROLLER_AXIS_LEFTX );
-			float yTrans = input.AxisValue( 0, SDL_CONTROLLER_AXIS_LEFTY );
-			Ogre::Vector3 dir( xTrans, -yTrans, 0.0f );
+		Gunship::Components::Transform::Handle playerTransform =
+			player.assign< Gunship::Components::Transform >( scene );
+		player.assign< Gunship::Components::Mesh >( scene, playerTransform, "Cube.mesh" );
+		player.assign< Player >( 10.0f );
 
-			player.Translate( dir * PLAYER_BASE_SPEED * delta );
-			player.LookAt( target );
+		return player;
+	}
 
-			xTrans = input.AxisValue( 0, SDL_CONTROLLER_AXIS_RIGHTX );
-			yTrans = input.AxisValue( 0, SDL_CONTROLLER_AXIS_RIGHTY );
-			Ogre::Vector2 bulletDir( xTrans, yTrans );
+	entityx::Entity CreateCursor( Gunship::Scene& scene, entityx::Entity player )
+	{
+		Gunship::Components::Transform::Handle playerTransform = player.component< Gunship::Components::Transform >();
 
-			cooldown -= delta;
-			if ( cooldown < 0.0f && bulletDir.length() > 0.9f )
-			{
-				MakeBullet( scene.AddGameObject( "Bullet" ), player.Position(), Ogre::Vector3( xTrans, -yTrans, 0.0f ) );
-				cooldown = BULLET_DELAY;
-			}
-		} );
+		entityx::Entity cursor = scene.CreateGameObject();
+		Gunship::Components::Transform::Handle cursorTransform =
+			cursor.assign< Gunship::Components::Transform >( scene );
+		playerTransform->AddChild( cursorTransform );
+		cursorTransform->SetScale( 0.3f, 0.3f, 0.3f );
+		cursor.assign< Gunship::Components::Mesh >( scene, cursorTransform, "Cube.mesh" );
 
-	target.AddMesh( "targetMesh", "ColourCube" );
-	target.SetPosition( 0.0f, 2.0f, 0.0f );
-	target.SetScale( 0.25f, 0.25f, 0.25f );
+		cursor.assign< PlayerCursor >( playerTransform, 0.01f );
 
-	target.AddBehavior(
-		[ &player ]( GameObject& gameObject, Scene& scene, const Input& input, float delta )
-		{
-			static float offset = 2.0f;
-
-			Ogre::Vector3 pos = player.Position();
-			float xTrans = input.AxisValue( 0, SDL_CONTROLLER_AXIS_RIGHTX );
-			float yTrans = input.AxisValue( 0, SDL_CONTROLLER_AXIS_RIGHTY );
-			gameObject.SetPosition( pos.x + xTrans * offset, pos.y + -yTrans * offset, pos.z + 0.0f );
-		} );
+		return cursor;
+	}
 }

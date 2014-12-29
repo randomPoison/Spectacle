@@ -2,7 +2,7 @@
 
 namespace Spectacle
 {
-	PlayerCursor::PlayerCursor( Gunship::Transform::Handle playerTransform, float speed )
+	PlayerCursor::PlayerCursor( Gunship::Components::Transform::Handle playerTransform, float speed )
 		: playerTransform( playerTransform ),
 		  moveSpeed( speed )
 	{

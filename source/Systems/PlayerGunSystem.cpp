@@ -9,11 +9,11 @@ namespace Spectacle
 	                              float delta )
 	{
 		PlayerCursor::Handle cursor;
-		Gunship::Transform::Handle cursorTransform;
-		for ( auto entity : entities.entities_with_components< PlayerCursor, Gunship::Transform >() )
+		Gunship::Components::Transform::Handle cursorTransform;
+		for ( auto entity : entities.entities_with_components< PlayerCursor, Gunship::Components::Transform >() )
 		{
 			entity.unpack< PlayerCursor >( cursor );
-			entity.unpack< Gunship::Transform >( cursorTransform );
+			entity.unpack< Gunship::Components::Transform >( cursorTransform );
 
 			Gunship::Input::MouseCoord mouseMovement = Gunship::Input::mouseMovement();
 			cursorTransform->Translate( mouseMovement.x * cursor->moveSpeed,

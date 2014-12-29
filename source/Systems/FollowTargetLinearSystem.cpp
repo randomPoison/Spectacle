@@ -10,11 +10,11 @@ namespace Spectacle
 	                                       float delta )
 	{
 		FollowTargetLinear::Handle followTarget;
-		Gunship::Transform::Handle transform;
-		for ( auto entity : entities.entities_with_components< FollowTargetLinear, Gunship::Transform >() )
+		Gunship::Components::Transform::Handle transform;
+		for ( auto entity : entities.entities_with_components< FollowTargetLinear, Gunship::Components::Transform >() )
 		{
 			entity.unpack< FollowTargetLinear >( followTarget );
-			entity.unpack< Gunship::Transform >( transform );
+			entity.unpack< Gunship::Components::Transform >( transform );
 			Ogre::Vector3 desiredPostition = followTarget->desiredPosition();
 			Ogre::Vector3 resultPosition = Ogre::Math::lerp( transform->position(),
 			                                                 desiredPostition,

@@ -7,9 +7,9 @@ namespace Spectacle
 {
 	struct PlayerCursor : public entityx::Component< PlayerCursor >
 	{
-		Gunship::Transform::Handle playerTransform;
+		Gunship::Components::Transform::Handle playerTransform;
 		float moveSpeed;
 
-		PlayerCursor( Gunship::Transform::Handle playerTransform, float speed = 1.0f );
+		PlayerCursor( Gunship::Components::Transform::Handle playerTransform, float speed = 1.0f );
 	};
 }

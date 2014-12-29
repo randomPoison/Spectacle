@@ -10,11 +10,11 @@ namespace Spectacle
 	void PlayerMovementSystem::Update( entityx::EntityManager& entities,
 	                                   float delta )
 	{
-		Gunship::Transform::Handle transform;
+		Gunship::Components::Transform::Handle transform;
 		Player::Handle player;
-		for ( auto entity : entities.entities_with_components< Gunship::Transform, Player >() )
+		for ( auto entity : entities.entities_with_components< Gunship::Components::Transform, Player >() )
 		{
-			entity.unpack< Gunship::Transform >( transform );
+			entity.unpack< Gunship::Components::Transform >( transform );
 			entity.unpack< Player >( player );
 
 			if ( Gunship::Input::KeyDown( SDL_SCANCODE_D ) )

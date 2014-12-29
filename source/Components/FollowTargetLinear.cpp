@@ -1,6 +1,6 @@
 #include <Components/FollowTargetLinear.h>
 
-Spectacle::FollowTargetLinear::FollowTargetLinear( Gunship::Transform::Handle target,
+Spectacle::FollowTargetLinear::FollowTargetLinear( Gunship::Components::Transform::Handle target,
                                                    Ogre::Vector3 offset,
                                                    float followSpeed)
 	: targetTransform( target ),
