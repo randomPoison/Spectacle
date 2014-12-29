@@ -4,50 +4,6 @@
 
 namespace Spectacle
 {
-	struct Player : public entityx::Component< Player >
-	{
-		float moveSpeed;
-
-		Player( float speed = 1.0f )
-			: moveSpeed( speed )
-		{
-		}
-	};
-
-	struct PlayerMovementSystem : public Gunship::System< PlayerMovementSystem, Gunship::BehaviorSystemBase >
-	{
-		void Update( entityx::EntityManager& entities,
-					 float delta ) override
-		{
-			Gunship::Transform::Handle transform;
-			Player::Handle player;
-			for ( auto entity : entities.entities_with_components< Gunship::Transform, Player >() )
-			{
-				entity.unpack< Gunship::Transform >( transform );
-				entity.unpack< Player >( player );
-
-				if ( Gunship::Input::KeyDown( SDL_SCANCODE_D ) )
-				{
-					transform->node->translate( Ogre::Vector3::UNIT_X * player->moveSpeed * delta );
-				}
-				if ( Gunship::Input::KeyDown( SDL_SCANCODE_A ) )
-				{
-					transform->node->translate( Ogre::Vector3::NEGATIVE_UNIT_X * player->moveSpeed * delta );
-				}
-				if ( Gunship::Input::KeyDown( SDL_SCANCODE_W ) )
-				{
-					transform->node->translate( Ogre::Vector3::UNIT_Y * player->moveSpeed * delta );
-				}
-				if ( Gunship::Input::KeyDown( SDL_SCANCODE_S ) )
-				{
-					transform->node->translate( Ogre::Vector3::NEGATIVE_UNIT_Y * player->moveSpeed * delta );
-				}
-
-				transform->node->_getDerivedPositionUpdated();
-			}
-		}
-	};
-
 	void InitializeScene( Gunship::Scene& scene )
 	{
 		// add systems to scene
@@ -61,7 +17,7 @@ namespace Spectacle
 		cameraTransform->node->setPosition( 0.0f, 0.0f, 30.0f );
 		cameraTransform->node->_getDerivedPositionUpdated(); // trigger ogre to recalculate derived position.
 		cameraTransform->node->lookAt( Ogre::Vector3( 0.0f, 0.0f, 0.0f ),
-									   Ogre::Node::TS_WORLD );
+		                               Ogre::Node::TS_WORLD );
 
 		entityx::Entity cube = scene.CreateGameObject();
 		Gunship::Transform::Handle cubeTransform =
