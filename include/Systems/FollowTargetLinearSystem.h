@@ -6,7 +6,7 @@ namespace Spectacle
 {
 	struct FollowTargetLinearSystem : public Gunship::System< FollowTargetLinearSystem, Gunship::BehaviorSystemBase >
 	{
-		void Update( entityx::EntityManager& entities,
+		void Update( Gunship::Scene& scene,
 		             float delta ) override;
 	};
 }

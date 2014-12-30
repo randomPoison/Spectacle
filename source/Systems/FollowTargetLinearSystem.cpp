@@ -1,4 +1,5 @@
 #include <entityx/Entity.h>
+#include <Scene.h>
 #include <Components/Transform.h>
 
 #include "Systems/FollowTargetLinearSystem.h"
@@ -6,12 +7,13 @@
 
 namespace Spectacle
 {
-	void FollowTargetLinearSystem::Update( entityx::EntityManager& entities,
+	void FollowTargetLinearSystem::Update( Gunship::Scene& scene,
 	                                       float delta )
 	{
 		FollowTargetLinear::Handle followTarget;
 		Gunship::Components::Transform::Handle transform;
-		for ( auto entity : entities.entities_with_components< FollowTargetLinear, Gunship::Components::Transform >() )
+		for ( auto entity : scene.entities()
+			.entities_with_components< FollowTargetLinear, Gunship::Components::Transform >() )
 		{
 			entity.unpack< FollowTargetLinear >( followTarget );
 			entity.unpack< Gunship::Components::Transform >( transform );

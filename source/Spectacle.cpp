@@ -10,6 +10,7 @@
 #include "Systems/FollowTargetLinearSystem.h"
 #include "Systems/PlayerMovementSystem.h"
 #include "Systems/PlayerGunSystem.h"
+#include "Systems/BulletMovementSystem.h"
 
 namespace Spectacle
 {
@@ -21,6 +22,7 @@ namespace Spectacle
 		scene.AddSystem< PlayerMovementSystem >();
 		scene.AddSystem< FollowTargetLinearSystem >();
 		scene.AddSystem< PlayerGunSystem >();
+		scene.AddSystem< BulletMovementSystem >();
 
 		entityx::Entity player = CreatePlayer( scene );
 		CreateCursor( scene, player );

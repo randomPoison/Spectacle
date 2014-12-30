@@ -6,7 +6,7 @@ namespace Spectacle
 {
 	struct PlayerMovementSystem : public Gunship::System< PlayerMovementSystem, Gunship::BehaviorSystemBase >
 	{
-		void Update( entityx::EntityManager& entities,
+		void Update( Gunship::Scene& scene,
 		             float delta ) override;
 	};
 }
