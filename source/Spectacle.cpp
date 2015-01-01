@@ -3,6 +3,7 @@
 #include <Engine.h>
 #include <Scene.h>
 #include <Mouse.h>
+#include <Systems/EnemyBehaviorSystem.h>
 
 #include "Player.h"
 #include "Camera.h"
@@ -12,20 +13,21 @@
 #include "Systems/PlayerMovementSystem.h"
 #include "Systems/PlayerGunSystem.h"
 #include "Systems/BulletMovementSystem.h"
-#include "Systems/EnemyBehavior.h"
+#include "Systems/LevelManagerSystem.h"
 
 namespace Spectacle
 {
 	void InitializeScene( Gunship::Scene& scene )
 	{
-		//Gunship::Mouse::SetRelativeMode( true );
+		Gunship::Mouse::SetRelativeMode( true );
 
 		// add systems to scene
 		scene.AddSystem< PlayerMovementSystem >();
 		scene.AddSystem< FollowTargetLinearSystem >();
 		scene.AddSystem< PlayerGunSystem >();
 		scene.AddSystem< BulletMovementSystem >();
-		scene.AddSystem< Systems::EnemyBehavior >();
+		scene.AddSystem< Systems::EnemyBehaviorSystem >();
+		scene.AddSystem< Systems::LevelManagerSystem >();
 
 		entityx::Entity player = CreatePlayer( scene );
 		CreateCursor( scene, player );

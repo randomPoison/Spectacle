@@ -1,14 +1,14 @@
 #include <Scene.h>
 #include <Components/Transform.h>
+#include <Systems/EnemyBehaviorSystem.h>
 
-#include "Systems/EnemyBehavior.h"
 #include "Components/Enemy.h"
 
 namespace Spectacle
 {
 	namespace Systems
 	{
-		void EnemyBehavior::Update( Gunship::Scene& scene, float delta )
+		void EnemyBehaviorSystem::Update( Gunship::Scene& scene, float delta )
 		{
 			for ( entityx::Entity entity : scene.entities()
 				.entities_with_components< Gunship::Components::Transform, Components::Enemy >() )

@@ -11,7 +11,7 @@ namespace Spectacle
 {
 	namespace Systems
 	{
-		struct EnemyBehavior : public Gunship::System< EnemyBehavior, Gunship::BehaviorSystemBase >
+		struct LevelManagerSystem : public Gunship::System< LevelManagerSystem, Gunship::BehaviorSystemBase >
 		{
 			void Update( Gunship::Scene& scene, float delta ) override;
 		};
