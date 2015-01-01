@@ -22,3 +22,6 @@ external
 *.exe
 *.out
 *.app
+
+# Editor Config Files
+*.sublime-workspace
