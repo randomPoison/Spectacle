@@ -10,7 +10,8 @@ namespace Spectacle
 	{
 		void EnemyBehaviorSystem::Update( Gunship::Scene& scene, float delta )
 		{
-			for ( entityx::Entity entity : scene.entities()
+/*
+			for ( Gunship::Entity entity : scene.entities()
 				.entities_with_components< Gunship::Components::Transform, Components::Enemy >() )
 			{
 				Components::Enemy& enemy = *entity.component< Components::Enemy >().get();
@@ -23,6 +24,7 @@ namespace Spectacle
 				Gunship::Vector3 moveDir = ( playerTransform.position() - enemyTransform.position() ).normalisedCopy();
 				enemyTransform.Translate( moveDir * enemy.moveSpeed * delta );
 			}
+*/
 		}
 	}
 }

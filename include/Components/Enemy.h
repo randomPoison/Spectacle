@@ -1,18 +1,18 @@
 #pragma once
 
-#include <entityx/Entity.h>
+#include <Components/SimpleStructComponent.h>
 
 namespace Spectacle
 {
 	namespace Components
 	{
-		struct Enemy : entityx::Component< Enemy >
+		struct Enemy : public Gunship::Components::SimpleStructComponent
 		{
-			entityx::Entity player;
+			Gunship::Entity player;
 			float bulletDelay;
 			float moveSpeed;
 
-			Enemy( entityx::Entity player,
+			Enemy( Gunship::Entity player,
 			       float bulletDelay = 1.0f,
 			       float moveSpeed = 5.0f);
 		};

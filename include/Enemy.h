@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entityx/Entity.h>
+#include <Entity/Entity.h>
 #include <Math/Vector3.h>
 
 namespace Gunship
@@ -10,7 +10,7 @@ namespace Gunship
 
 namespace Spectacle
 {
-	entityx::Entity CreateEnemy( Gunship::Scene& scene,
+	Gunship::Entity CreateEnemy( Gunship::Scene& scene,
 	                             Gunship::Vector3 position,
-	                             entityx::Entity player );
+	                             Gunship::Entity player );
 }

@@ -4,7 +4,7 @@ namespace Spectacle
 {
 	namespace Components
 	{
-		Enemy::Enemy( entityx::Entity player,
+		Enemy::Enemy( Gunship::Entity player,
 		              float bulletDelay,
 		              float moveSpeed )
 			: player( player ),

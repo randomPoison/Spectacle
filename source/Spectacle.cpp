@@ -29,7 +29,7 @@ namespace Spectacle
 		scene.AddSystem< Systems::EnemyBehaviorSystem >();
 		scene.AddSystem< Systems::LevelManagerSystem >();
 
-		entityx::Entity player = CreatePlayer( scene );
+		Gunship::Entity player = CreatePlayer( scene );
 		CreateCursor( scene, player );
 		CreateCamera( scene, player );
 		CreateLight( scene );

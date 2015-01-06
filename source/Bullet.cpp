@@ -2,18 +2,19 @@
 #include <Components/Transform.h>
 #include <Components/Mesh.h>
 #include <Components/Alarm.h>
-#include <entityx/Entity.h>
+#include <Entity/Entity.h>
 
 #include "Bullet.h"
 #include "Components/Bullet.h"
 
 namespace Spectacle
 {
-	entityx::Entity CreateBullet( Gunship::Scene& scene,
+	Gunship::Entity CreateBullet( Gunship::Scene& scene,
 	                              Gunship::Vector3 position,
 	                              Gunship::Vector3 direction )
 	{
-		entityx::Entity bullet = scene.CreateGameObject();
+		Gunship::Entity bullet = scene.entities().Create();
+/*
 		Gunship::Components::Transform::Handle bulletTransform =
 			bullet.assign< Gunship::Components::Transform >(
 				scene,
@@ -24,11 +25,11 @@ namespace Spectacle
 		bullet.assign< Gunship::Components::Mesh >( scene, bulletTransform, "Cube.mesh" );
 		bullet.assign< Gunship::Components::Alarm >(
 			0.5f,
-			[]( Gunship::Scene& scene, entityx::Entity entity )
+			[]( Gunship::Scene& scene, Gunship::Entity entity )
 			{
 				entity.destroy();
 			} );
-
+*/
 		return bullet;
 	}
 }

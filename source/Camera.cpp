@@ -6,9 +6,10 @@
 
 namespace Spectacle
 {
-	entityx::Entity CreateCamera( Gunship::Scene& scene, entityx::Entity player )
+	Gunship::Entity CreateCamera( Gunship::Scene& scene, Gunship::Entity player )
 	{
-		entityx::Entity camera = scene.CreateGameObject();
+		Gunship::Entity camera = scene.entities().Create();
+/*
 		Gunship::Components::Transform::Handle cameraTransform =
 			camera.assign< Gunship::Components::Transform >( scene );
 		camera.assign< Gunship::Components::Camera >( scene, cameraTransform );
@@ -18,7 +19,7 @@ namespace Spectacle
 
 		Gunship::Components::Transform::Handle playerTransform = player.component< Gunship::Components::Transform >();
 		camera.assign< FollowTargetLinear >( playerTransform, Gunship::Vector3( 0.0f, 0.0f, 30.0f ), 5.0f );
-
+*/
 		return camera;
 	}
 }

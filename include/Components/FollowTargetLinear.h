@@ -1,19 +1,19 @@
 #pragma once
 
-#include <entityx/Entity.h>
-#include <OgreVector3.h>
-#include <System.h>
+#include <Components/SimpleStructComponent.h>
+#include <Math/Vector3.h>
+#include <Entity/System.h>
 #include <Components/Transform.h>
 
 namespace Spectacle
 {
-	struct FollowTargetLinear : public entityx::Component< FollowTargetLinear >
+	struct FollowTargetLinear : public Gunship::Components::SimpleStructComponent
 	{
-		Gunship::Components::Transform::Handle targetTransform;
+		Gunship::Entity target;
 		Ogre::Vector3 offset;
 		float followSpeed;
 
-		FollowTargetLinear( Gunship::Components::Transform::Handle target,
+		FollowTargetLinear( Gunship::Entity target,
 		              Ogre::Vector3 offset = Ogre::Vector3::ZERO,
 		              float followSpeed = 10.0f );
 
@@ -23,6 +23,6 @@ namespace Spectacle
 		 * @details
 		 *     The desired position is current position of the target plus the offset.
 		 */
-		Ogre::Vector3 desiredPosition();
+		Gunship::Vector3 desiredPosition();
 	};
 }

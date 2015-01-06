@@ -7,18 +7,19 @@
 
 namespace Spectacle
 {
-	entityx::Entity CreateEnemy( Gunship::Scene& scene,
+	Gunship::Entity CreateEnemy( Gunship::Scene& scene,
 	                             Gunship::Vector3 position,
-	                             entityx::Entity player )
+	                             Gunship::Entity player )
 	{
-		entityx::Entity enemy = scene.CreateGameObject();
+		Gunship::Entity enemy = scene.entities().Create();
+/*
 		Gunship::Components::Transform::Handle enemyTransform =
 			enemy.assign< Gunship::Components::Transform >(
 				scene,
 				position );
 		enemy.assign< Gunship::Components::Mesh >( scene, enemyTransform, "Cube.mesh" );
 		enemy.assign< Components::Enemy >( player );
-
+*/
 		return enemy;
 	}
 }

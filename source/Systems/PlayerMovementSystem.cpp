@@ -1,4 +1,4 @@
-#include <entityx/Entity.h>
+#include <Entity/Entity.h>
 #include <Components/Transform.h>
 #include <Scene.h>
 #include <Input.h>
@@ -11,6 +11,7 @@ namespace Spectacle
 	void PlayerMovementSystem::Update( Gunship::Scene& scene,
 	                                   float delta )
 	{
+/*
 		Gunship::Components::Transform::Handle transform;
 		Player::Handle player;
 		for ( auto entity : scene.entities()
@@ -36,5 +37,6 @@ namespace Spectacle
 				transform->Translate( Gunship::Vector3::NEGATIVE_UNIT_Y * player->moveSpeed * delta );
 			}
 		}
+*/
 	}
 }

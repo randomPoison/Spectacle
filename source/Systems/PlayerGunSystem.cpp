@@ -12,6 +12,7 @@ namespace Spectacle
 	void PlayerGunSystem::Update( Gunship::Scene& scene,
 	                              float delta )
 	{
+/*
 		PlayerCursor::Handle cursor;
 		Gunship::Components::Transform::Handle cursorTransform;
 		for ( auto entity : scene.entities()
@@ -32,5 +33,6 @@ namespace Spectacle
 				              cursorTransform->position() );
 			}
 		}
+*/
 	}
 }
