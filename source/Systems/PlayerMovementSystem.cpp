@@ -11,6 +11,8 @@ namespace Spectacle
 	void PlayerMovementSystem::Update( Gunship::Scene& scene,
 	                                   float delta )
 	{
+
+
 /*
 		Gunship::Components::Transform::Handle transform;
 		Player::Handle player;

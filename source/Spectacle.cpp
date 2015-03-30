@@ -19,21 +19,21 @@ namespace Spectacle
 {
 	void InitializeScene( Gunship::Scene& scene )
 	{
-		Gunship::Mouse::SetRelativeMode( true );
+		//Gunship::Mouse::SetRelativeMode( true );
 
 		// add systems to scene
-		scene.AddSystem< PlayerMovementSystem >();
-		scene.AddSystem< FollowTargetLinearSystem >();
-		scene.AddSystem< PlayerGunSystem >();
-		scene.AddSystem< BulletMovementSystem >();
-		scene.AddSystem< Systems::EnemyBehaviorSystem >();
-		scene.AddSystem< Systems::LevelManagerSystem >();
+//		scene.AddSystem< PlayerMovementSystem >();
+//		scene.AddSystem< FollowTargetLinearSystem >();
+//		scene.AddSystem< PlayerGunSystem >();
+//		scene.AddSystem< BulletMovementSystem >();
+//		scene.AddSystem< Systems::EnemyBehaviorSystem >();
+//		scene.AddSystem< Systems::LevelManagerSystem >();
 
 		Gunship::Entity player = CreatePlayer( scene );
-		CreateCursor( scene, player );
 		CreateCamera( scene, player );
-		CreateLight( scene );
-		CreateEnemy( scene, Gunship::Vector3( 10.0f, 10.0f, 0.0f ), player );
+//		CreateCursor( scene, player );
+//		CreateLight( scene );
+//		CreateEnemy( scene, Gunship::Vector3( 10.0f, 10.0f, 0.0f ), player );
 	}
 }
 
