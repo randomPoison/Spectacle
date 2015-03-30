@@ -9,5 +9,5 @@ namespace Gunship
 
 namespace Spectacle
 {
-	Gunship::Entity CreateCamera( Gunship::Scene& scene, Gunship::Entity player );
+	Gunship::Entity CreateCamera( Gunship::Scene& scene );
 }

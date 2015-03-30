@@ -7,18 +7,16 @@
 
 namespace Spectacle
 {
-	Gunship::Entity CreateCamera( Gunship::Scene& scene, Gunship::Entity player )
+	Gunship::Entity CreateCamera( Gunship::Scene& scene )
 	{
 		Gunship::Entity camera = scene.entities().Create();
 
-		Gunship::Components::Transform& cameraTransform = scene.componentManager< Gunship::Components::TransformManager >().Assign( camera.id );
+		Gunship::Components::Transform& cameraTransform =
+			scene.componentManager< Gunship::Components::TransformManager >().Assign( camera.id );
 		scene.componentManager< Gunship::Components::CameraManager >().Assign( camera.id );
 
-		Gunship::Components::Transform& playerTransform = scene.componentManager< Gunship::Components::TransformManager >().Get( player.id );
-		Gunship::Vector3 playerPosition = playerTransform.position();
-
-		cameraTransform.SetPosition( 0.0f, 0.0f, 0.0f );
-		cameraTransform.LookAt( 0.0f, 0.0f, -1.0f );
+		cameraTransform.SetPosition( 0.0f, 0.0f, 30.0f );
+		cameraTransform.LookAt( 0.0f, 0.0f, 0.0f );
 /*
 		Gunship::Components::Transform::Handle playerTransform = player.component< Gunship::Components::Transform >();
 		camera.assign< FollowTargetLinear >( playerTransform, Gunship::Vector3( 0.0f, 0.0f, 30.0f ), 5.0f );

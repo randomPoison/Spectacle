@@ -12,12 +12,9 @@ namespace Spectacle
 	{
 		Gunship::Entity player = scene.entities().Create();
 
-		Gunship::Components::Transform& playerTransform =
-			scene.componentManager< Gunship::Components::TransformManager >().Assign( player );
+		scene.componentManager< Gunship::Components::TransformManager >().Assign( player );
 		scene.componentManager< Gunship::Components::MeshManager >().Assign( player, "Cube.mesh" );
-
-		playerTransform.SetPosition( 0.0f, 0.0f, -10.0f );
-		playerTransform.SetScale( 1.0f, 1.0f, 1.0f );
+		// TODO: Assign a Player component so that we can run some tests on the object
 
 		return player;
 	}
