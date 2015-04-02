@@ -19,7 +19,7 @@ namespace Spectacle
 {
 	void InitializeScene( Gunship::Scene& scene )
 	{
-//		scene.AddSystem< Systems::LevelManagerSystem >();
+		scene.AddSystem< Systems::LevelManagerSystem >();
 
 		CreatePlayer( scene );
 		CreateCamera( scene );

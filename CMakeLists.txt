@@ -22,8 +22,13 @@ get_directory_property(GUNSHIP_INCLUDE_DIRS
 file(GLOB_RECURSE PROJECT_SOURCES
      source/*.cpp)
 
+file(GLOB_RECURSE PROJECT_INCLUDES
+    include/*.h)
+
+set(SPECTACLE_SOURCES ${PROJECT_SOURCES} ${PROJECT_INCLUDES})
+
 # configure executable
-add_executable(Spectacle ${PROJECT_SOURCES})
+add_executable(Spectacle ${SPECTACLE_SOURCES})
 target_link_libraries(Spectacle LibGunship)
 target_include_directories(Spectacle PUBLIC include)
 #target_include_directories(Spectacle SYSTEM PUBLIC ${GUNSHIP_INCLUDE_DIRS})
