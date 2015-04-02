@@ -1,22 +1,25 @@
-#include "Spectacle.h"
+#include <Scene.h>
+#include <Components/Transform.h>
+#include <Components/Mesh.h>
 
-static const float BULLET_DELAY = 0.3f;
+#include "Enemy.h"
+#include "Components/Enemy.h"
 
-void MakeEnemy( GameObject enemy, GameObject& player, Ogre::Vector3 start )
+namespace Spectacle
 {
-	enemy.AddMesh( "EnemyMesh", "ColourCube" );
-	enemy.SetPosition( start );
-	enemy.AddCollider( 1.0f );
-	float cooldown = 0.0f;
-	enemy.AddBehavior( [ &player, cooldown ]( GameObject& enemy, Scene& scene, const Input& input, float delta ) mutable
-		{
-			//enemy.LookAt( player );
-			cooldown += delta;
-			if ( cooldown > BULLET_DELAY )
-			{
-				Ogre::Vector3 bulletDir = player.Position() - enemy.Position();
-				MakeBullet( scene.AddGameObject( "Bullet" ), enemy.Position(), bulletDir );
-				cooldown -= BULLET_DELAY;
-			}
-		} );
+	entityx::Entity CreateEnemy( Gunship::Scene& scene,
+	                             Gunship::Vector3 position,
+	                             entityx::Entity player )
+	{
+		entityx::Entity enemy = scene.CreateGameObject();
+		Gunship::Components::Transform::Handle enemyTransform =
+			enemy.assign< Gunship::Components::Transform >(
+				scene,
+				position );
+		enemy.assign< Gunship::Components::Mesh >( scene, enemyTransform, "Cube.mesh" );
+		enemy.assign< Components::Enemy >( player );
+
+		return enemy;
+	}
 }
+

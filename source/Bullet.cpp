@@ -1,25 +1,34 @@
-#include "Spectacle.h"
+#include <Scene.h>
+#include <Components/Transform.h>
+#include <Components/Mesh.h>
+#include <Components/Alarm.h>
+#include <entityx/Entity.h>
 
-static const float BULLET_SPEED = 50.0f;
-static const float BULLET_LIFE = 5.0f;
+#include "Bullet.h"
+#include "Components/Bullet.h"
 
-void MakeBullet( GameObject bullet, Ogre::Vector3 start, Ogre::Vector3 dir )
+namespace Spectacle
 {
-	bullet.SetPosition( start );
-	bullet.AddMesh( "BulletMesh", "ColourCube" );
-	bullet.SetScale( 0.5f, 0.5f, 0.5f );
-	bullet.AddCollider( 0.5f );
-	float life = 0.0f;
-	dir.normalise();
-	bullet.AddBehavior(
-		[ dir, life ]( GameObject& bullet, Scene& scene, const Input& input, float delta ) mutable
-		{
-			bullet.Translate( dir * BULLET_SPEED * delta );
-
-			life += delta;
-			if ( life > BULLET_LIFE )
+	entityx::Entity CreateBullet( Gunship::Scene& scene,
+	                              Gunship::Vector3 position,
+	                              Gunship::Vector3 direction )
+	{
+		entityx::Entity bullet = scene.CreateGameObject();
+		Gunship::Components::Transform::Handle bulletTransform =
+			bullet.assign< Gunship::Components::Transform >(
+				scene,
+				position,
+				Gunship::Quaternion::IDENTITY,
+				Gunship::Vector3( 0.25f, 0.25f, 0.25f ) );
+		bullet.assign< Bullet >( direction.normalisedCopy(), 25.0f );
+		bullet.assign< Gunship::Components::Mesh >( scene, bulletTransform, "Cube.mesh" );
+		bullet.assign< Gunship::Components::Alarm >(
+			0.5f,
+			[]( Gunship::Scene& scene, entityx::Entity entity )
 			{
-				bullet.Destroy();
-			}
-		} );
+				entity.destroy();
+			} );
+
+		return bullet;
+	}
 }

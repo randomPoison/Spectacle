@@ -1,3 +1,6 @@
+# Directories
+external
+
 # Compiled Object files
 *.slo
 *.lo
@@ -19,3 +22,6 @@
 *.exe
 *.out
 *.app
+
+# Editor Config Files
+*.sublime-workspace
