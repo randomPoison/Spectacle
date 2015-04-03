@@ -8,8 +8,8 @@
 #include <Components/Alarm.h>
 #include <Components/Transform.h>
 #include <Components/Mesh.h>
-
 #include <Systems/EnemyBehaviorSystem.h>
+#include <Utility/Random.h>
 
 #include "Player.h"
 #include "Camera.h"
@@ -23,35 +23,74 @@
 
 namespace Spectacle
 {
-	void CreateTimedBlocks( Gunship::Scene& scene )
+	using Gunship::Components::AlarmManager;
+
+	AlarmManager::AlarmID CreateBlock( Gunship::Scene& scene, float x, float y, float time )
 	{
-		for ( int i = 0; i < 20; ++i )
-		{
-			auto entity = scene.entities().Create();
+		auto& alarmManager = scene.componentManager< AlarmManager >();
 
-			auto& transform =
-				scene.componentManager< Gunship::Components::TransformManager >().Assign( entity );
-			transform.SetPosition( -10.0f, 10.0f - i, 0.0f );
+		auto entity = scene.entities().Create();
 
-			scene.componentManager< Gunship::Components::MeshManager >().Assign( entity, "Cube.mesh" );
-			scene.componentManager< Gunship::Components::AlarmManager >().Assign(
-				entity,
-				20.0f - i,
-				[]( Gunship::Scene& scene, Gunship::Entity entity )
-				{
+		auto& transform =
+			scene.componentManager< Gunship::Components::TransformManager >().Assign( entity );
+		transform.SetPosition( x, y, 0.0f );
+
+		scene.componentManager< Gunship::Components::MeshManager >().Assign( entity, "Cube.mesh" );
+		return alarmManager.Assign(
+			entity,
+			time,
+			[]( Gunship::Scene& scene, Gunship::Entity entity )
+			{
 					scene.componentManager< Gunship::Components::TransformManager >().Destroy( entity );
 					scene.componentManager< Gunship::Components::MeshManager >().Destroy( entity );
-				} );
+			} );
+	}
+
+	void CreateTimedBlocks( Gunship::Scene& scene )
+	{
+		static float xOffset = -15.0f;
+		xOffset += 1.0f;
+
+		auto& alarmManager = scene.componentManager< AlarmManager >();
+
+		for ( int i = 0; i < 20; ++i )
+		{
+			auto alarmID = CreateBlock( scene, xOffset, 10.0f - i, 20.0f - i );
+
+			// Randomly cancel some alarms to see how the manager handles it.
+			if ( Random::Probability( 0.5f ) )
+			{
+				alarmManager.Cancel( alarmID );
+			}
+		}
+	}
+
+	void CreateReferenceBlocks( Gunship::Scene& scene )
+	{
+		auto& alarmManager = scene.componentManager< AlarmManager >();
+
+		for ( int i = 0; i < 20; ++i )
+		{
+			CreateBlock( scene, -15.0f, 10.0f - i, 20.0f - i );
 		}
 	}
 
 	void TimedBlocksReset( Gunship::Scene& scene, Gunship::Entity entity )
 	{
 		CreateTimedBlocks( scene );
-		scene.componentManager< Gunship::Components::AlarmManager >().Assign(
+		scene.componentManager< AlarmManager >().Assign(
 			entity,
 			22.0f,
 			TimedBlocksReset );
+	}
+
+	void ReferenceBlocksReset( Gunship::Scene& scene, Gunship::Entity entity )
+	{
+		CreateReferenceBlocks( scene );
+		scene.componentManager< AlarmManager >().Assign(
+			entity,
+			22.0f,
+			ReferenceBlocksReset );
 	}
 
 	void InitializeScene( Gunship::Scene& scene )
@@ -61,6 +100,7 @@ namespace Spectacle
 		CreatePlayer( scene );
 		CreateCamera( scene );
 
+		ReferenceBlocksReset( scene, scene.entities().Create() );
 		TimedBlocksReset( scene, scene.entities().Create() );
 	}
 }
