@@ -29,7 +29,7 @@ namespace Spectacle
 			//	Gunship::Mouse::SetRelativeMode( true );
 			//}
 
-			while ( entities.size() < 10 )
+			while ( entities.size() < 20 )
 			{
 				Gunship::Entity entity = scene.entities().Create();
 
@@ -45,13 +45,16 @@ namespace Spectacle
 				entities.push( entity );
 			}
 
-			Entity entity = entities.front();
-			entities.pop();
+			while ( entities.size() > 10 )
+			{
+				Entity entity = entities.front();
+				entities.pop();
 
-			scene.componentManager< TransformManager >().Destroy( entity );
-			scene.componentManager< MeshManager >().Destroy( entity );
+				scene.componentManager< TransformManager >().Destroy( entity );
+				scene.componentManager< MeshManager >().Destroy( entity );
 
-			// TODO: Destroy popped entity.
+				// TODO: Destroy popped entity.
+			}
 		}
 	}
 }
