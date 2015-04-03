@@ -35,7 +35,10 @@ namespace Spectacle
 
 				Gunship::Components::Transform& transform =
 					scene.componentManager< TransformManager >().Assign( entity );
-				transform.SetPosition( Random::Range( -10.0f, 10.0f ), Random::Range( -10.0f, 10.0f ), 0.0f );
+				transform.SetPosition(
+					Random::Range( 0.0f, 10.0f ),
+					Random::Range( -10.0f, 10.0f ),
+					Random::Range( -10.0f, 10.0f ) );
 
 				scene.componentManager< MeshManager >().Assign( entity, "Cube.mesh" );
 
