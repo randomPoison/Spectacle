@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <Engine.h>
 #include <Scene.h>
 #include <Mouse.h>
@@ -41,8 +39,7 @@ namespace Spectacle
 			time,
 			[]( Gunship::Scene& scene, Gunship::Entity entity )
 			{
-					scene.componentManager< Gunship::Components::TransformManager >().Destroy( entity );
-					scene.componentManager< Gunship::Components::MeshManager >().Destroy( entity );
+					scene.entities().Destroy( entity );
 			} );
 	}
 

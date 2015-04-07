@@ -50,10 +50,7 @@ namespace Spectacle
 				Entity entity = entities.front();
 				entities.pop();
 
-				scene.componentManager< TransformManager >().Destroy( entity );
-				scene.componentManager< MeshManager >().Destroy( entity );
-
-				// TODO: Destroy popped entity.
+				scene.entities().Destroy( entity );
 			}
 		}
 	}
