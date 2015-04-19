@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <queue>
 
 #include <Entity/System.h>
@@ -17,8 +18,10 @@ namespace Spectacle
 		struct CreateDestroySystem : public Gunship::System< CreateDestroySystem, Gunship::BehaviorSystemBase >
 		{
 			std::queue< Gunship::Entity > entities;
+			std::vector< Gunship::Entity > disabledPool;
 
 			void Update( Gunship::Scene& scene, float delta ) override;
+			Gunship::Entity CreateCube( Gunship::Scene& scene, float x, float y, float z );
 		};
 	}
 }
