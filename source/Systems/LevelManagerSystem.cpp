@@ -1,18 +1,12 @@
 #include <Input.h>
 #include <Mouse.h>
-
 #include <Scene.h>
-#include <Components/Transform.h>
-#include <Components/Mesh.h>
-#include <Utility/Random.h>
 
 #include "Systems/LevelManagerSystem.h"
+#include "Systems/CreateDestroySystem.h"
 
-using Gunship::Entity;
-using Gunship::Components::Transform;
-using Gunship::Components::TransformManager;
-using Gunship::Components::Mesh;
-using Gunship::Components::MeshManager;
+using Gunship::Input;
+using Spectacle::Systems::CreateDestroySystem;
 
 namespace Spectacle
 {
@@ -29,28 +23,10 @@ namespace Spectacle
 			//	Gunship::Mouse::SetRelativeMode( true );
 			//}
 
-			while ( entities.size() < 20 )
+			if ( Input::KeyPressed( SDL_SCANCODE_SPACE ) )
 			{
-				Gunship::Entity entity = scene.entities().Create();
-
-				Gunship::Components::Transform& transform =
-					scene.componentManager< TransformManager >().Assign( entity );
-				transform.SetPosition(
-					Random::Range( 0.0f, 10.0f ),
-					Random::Range( -10.0f, 10.0f ),
-					Random::Range( -10.0f, 10.0f ) );
-
-				scene.componentManager< MeshManager >().Assign( entity, "Cube.mesh" );
-
-				entities.push( entity );
-			}
-
-			while ( entities.size() > 10 )
-			{
-				Entity entity = entities.front();
-				entities.pop();
-
-				scene.entities().Destroy( entity );
+				auto& system = scene.behaviors().Get< CreateDestroySystem >();
+				system.active = !system.active;
 			}
 		}
 	}

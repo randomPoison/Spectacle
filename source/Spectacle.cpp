@@ -2,7 +2,6 @@
 #include <Scene.h>
 #include <Mouse.h>
 
-// Used for testing purposes, should be removed before merge.
 #include <Components/Alarm.h>
 #include <Components/Transform.h>
 #include <Components/Mesh.h>
@@ -18,6 +17,7 @@
 #include "Systems/PlayerGunSystem.h"
 #include "Systems/BulletMovementSystem.h"
 #include "Systems/LevelManagerSystem.h"
+#include "Systems/CreateDestroySystem.h"
 
 namespace Spectacle
 {
@@ -93,12 +93,13 @@ namespace Spectacle
 	void InitializeScene( Gunship::Scene& scene )
 	{
 		scene.AddSystem< Systems::LevelManagerSystem >();
+		scene.AddSystem< Systems::CreateDestroySystem >();
 
 		CreatePlayer( scene );
 		CreateCamera( scene );
 
-		ReferenceBlocksReset( scene, scene.entities().Create() );
-		TimedBlocksReset( scene, scene.entities().Create() );
+		//ReferenceBlocksReset( scene, scene.entities().Create() );
+		//TimedBlocksReset( scene, scene.entities().Create() );
 	}
 }
 

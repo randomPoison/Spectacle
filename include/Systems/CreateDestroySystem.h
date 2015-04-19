@@ -1,5 +1,7 @@
 #pragma once
 
+#include <queue>
+
 #include <Entity/System.h>
 #include <Entity/Entity.h>
 
@@ -12,8 +14,10 @@ namespace Spectacle
 {
 	namespace Systems
 	{
-		struct LevelManagerSystem : public Gunship::System< LevelManagerSystem, Gunship::BehaviorSystemBase >
+		struct CreateDestroySystem : public Gunship::System< CreateDestroySystem, Gunship::BehaviorSystemBase >
 		{
+			std::queue< Gunship::Entity > entities;
+
 			void Update( Gunship::Scene& scene, float delta ) override;
 		};
 	}
