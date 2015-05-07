@@ -2,6 +2,7 @@
 #include <Scene.h>
 #include <Mouse.h>
 
+#include <Entity/Entity.h>
 #include <Components/Alarm.h>
 #include <Components/Transform.h>
 #include <Components/Mesh.h>
@@ -18,10 +19,15 @@
 #include "Systems/BulletMovementSystem.h"
 #include "Systems/LevelManagerSystem.h"
 #include "Systems/CreateDestroySystem.h"
+#include "Systems/CircleMovementSystem.h"
+#include "Components/CircleMovement.h"
 
 namespace Spectacle
 {
 	using Gunship::Components::AlarmManager;
+	using Gunship::Components::TransformManager;
+	using Gunship::Components::MeshManager;
+	using Gunship::Entity;
 
 	AlarmManager::AlarmID CreateBlock( Gunship::Scene& scene, float x, float y, float time )
 	{
@@ -90,13 +96,37 @@ namespace Spectacle
 			ReferenceBlocksReset );
 	}
 
-	void InitializeScene( Gunship::Scene& scene )
+	void StartCreateDestroyTest( Gunship::Scene& scene )
 	{
 		scene.AddSystem< Systems::LevelManagerSystem >();
 		scene.AddSystem< Systems::CreateDestroySystem >();
+	}
 
-		CreatePlayer( scene );
+	void StartCircleMovementTest( Gunship::Scene& scene )
+	{
+		// Register managers.
+		scene.RegisterComponentManager< CircleMovementManager >( new CircleMovementManager );
+		scene.AddSystem< Systems::CircleMovementSystem >();
+
+		// Populate the scene.
+		CircleMovementManager& circleManager = scene.componentManager< CircleMovementManager >();
+		TransformManager& transformManager = scene.componentManager< TransformManager >();
+		MeshManager& meshManager = scene.componentManager< MeshManager >();
+		for ( int count = 0; count < 1000; ++count )
+		{
+			Entity entity = scene.entities().Create();
+			circleManager.Assign( entity );
+			transformManager.Assign( entity );
+			meshManager.Assign( entity, "Cube.mesh" );
+		}
+	}
+
+	void InitializeScene( Gunship::Scene& scene )
+	{
 		CreateCamera( scene );
+
+		//StartCreateDestroyTest( scene );
+		StartCircleMovementTest( scene );
 
 		//ReferenceBlocksReset( scene, scene.entities().Create() );
 		//TimedBlocksReset( scene, scene.entities().Create() );

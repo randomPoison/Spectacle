@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
 #include <queue>
 
 #include <Entity/System.h>
 #include <Entity/Entity.h>
+#include <Containers/FastArray.h>
 
 namespace Gunship
 {
@@ -18,7 +18,7 @@ namespace Spectacle
 		struct CreateDestroySystem : public Gunship::System< CreateDestroySystem, Gunship::BehaviorSystemBase >
 		{
 			std::queue< Gunship::Entity > entities;
-			std::vector< Gunship::Entity > disabledPool;
+			Gunship::Containers::FastArray< Gunship::Entity > disabledPool;
 
 			void Update( Gunship::Scene& scene, float delta ) override;
 			Gunship::Entity CreateCube( Gunship::Scene& scene, float x, float y, float z );

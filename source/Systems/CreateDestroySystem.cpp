@@ -1,4 +1,5 @@
 #include <OgreSceneNode.h>
+#include <OgreEntity.h>
 
 #include <Input.h>
 #include <Mouse.h>
@@ -18,7 +19,7 @@ using Gunship::Components::Mesh;
 using Gunship::Components::MeshManager;
 
 const int CUBES_PER_FRAME = 1000;
-const int TOTAL_CUBES = 10000;
+const int TOTAL_CUBES = 100000;
 
 namespace Spectacle {
 namespace Systems {
@@ -48,9 +49,9 @@ void CreateDestroySystem::Update( Scene& scene, float delta )
 		//scene.entities().Destroy( entity );
 
 		// Recycle the entity.
-		Transform& transform = transformManager.Get( entity );
-		transform.node->setVisible( false );
-		disabledPool.push_back( entity );
+		Mesh& mesh = meshManager.Get( entity );
+		mesh.mesh->setVisible( false );
+		disabledPool.Push( entity );
 	}
 }
 
@@ -64,7 +65,7 @@ Entity CreateDestroySystem::CreateCube( Scene& scene, float x, float y, float z 
 		Entity entity = scene.entities().Create();
 
 		Transform& transform = transformManager.Assign( entity );
-		transform.SetPosition( x, y, z );
+		transform.position( x, y, z );
 
 		meshManager.Assign( entity, "Cube.mesh" );
 
@@ -72,12 +73,15 @@ Entity CreateDestroySystem::CreateCube( Scene& scene, float x, float y, float z 
 	}
 	else
 	{
-		Entity entity = disabledPool.back();
-		disabledPool.pop_back();
+		Entity entity = disabledPool.Peek();
+		disabledPool.Pop();
+
+		Mesh& mesh = meshManager.Get( entity );
+		mesh.mesh->setVisible( true );
 
 		Transform& transform = transformManager.Get( entity );
-		transform.node->setVisible( true );
-		transform.SetPosition( x, y, z );
+		
+		//transform.position( x, y, z );
 
 		return entity;
 	}
