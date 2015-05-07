@@ -25,3 +25,4 @@ external
 
 # Editor Config Files
 *.sublime-workspace
+Builds/

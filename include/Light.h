@@ -7,5 +7,5 @@ namespace Gunship
 
 namespace Spectacle
 {
-	entityx::Entity CreateLight( Gunship::Scene& scene );
+	Gunship::Entity CreateLight( Gunship::Scene& scene );
 }

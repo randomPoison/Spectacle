@@ -2,6 +2,26 @@ cmake_minimum_required (VERSION 2.8.12)
 
 project (Spectacle CXX C)
 
+function(source_group_setup PROJECT_ROOT)
+	foreach(FILE ${ARGN})
+		get_filename_component(FILE_DIR "${FILE}" DIRECTORY)
+
+		# skip src or include and changes /'s to \\'s
+		string(REPLACE "${PROJECT_ROOT}" "" FILE_DIR "${FILE_DIR}")
+		string(REGEX REPLACE "(\\./)?(source|include)/?" "" GROUP "${FILE_DIR}")
+		string(REPLACE "/" "\\" GROUP "${GROUP}")
+
+		# group into "Source Files" and "Header Files"
+		if ("${FILE}" MATCHES ".*\\.cpp")
+			set(GROUP "Source Files\\${GROUP}")
+		elseif("${FILE}" MATCHES ".*\\.h")
+			set(GROUP "Header Files\\${GROUP}")
+		endif()
+
+		source_group("${GROUP}" FILES "${FILE}")
+	endforeach()
+endfunction(source_group_setup)
+
 # Avoid source tree pollution
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
 	message (FATAL_ERROR "In-source builds are not permitted. Make a separate folder for building:\nmkdir build; cd build; cmake ..\nBefore that, remove the files already created:\nrm -rf CMakeCache.txt CMakeFiles")
@@ -22,8 +42,16 @@ get_directory_property(GUNSHIP_INCLUDE_DIRS
 file(GLOB_RECURSE PROJECT_SOURCES
      source/*.cpp)
 
+file(GLOB_RECURSE PROJECT_INCLUDES
+    include/*.h)
+
+set(SPECTACLE_SOURCES ${PROJECT_SOURCES} ${PROJECT_INCLUDES})
+
+# setup VS filters (and I guess it also does something for XCode?)
+source_group_setup(${CMAKE_CURRENT_SOURCE_DIR} ${SPECTACLE_SOURCES})
+
 # configure executable
-add_executable(Spectacle ${PROJECT_SOURCES})
+add_executable(Spectacle ${SPECTACLE_SOURCES})
 target_link_libraries(Spectacle LibGunship)
 target_include_directories(Spectacle PUBLIC include)
 #target_include_directories(Spectacle SYSTEM PUBLIC ${GUNSHIP_INCLUDE_DIRS})

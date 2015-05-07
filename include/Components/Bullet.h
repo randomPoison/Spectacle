@@ -1,11 +1,11 @@
 #pragma once
 
-#include <entityx/Entity.h>
+#include <Components/SimpleStructComponent.h>
 #include <Math/Vector3.h>
 
 namespace Spectacle
 {
-	struct Bullet : public entityx::Component< Bullet >
+	struct Bullet : public Gunship::Components::SimpleStructComponent
 	{
 		Gunship::Vector3 velocity;
 

@@ -7,6 +7,6 @@ namespace Gunship
 
 namespace Spectacle
 {
-	entityx::Entity CreatePlayer( Gunship::Scene& scene );
-	entityx::Entity CreateCursor( Gunship::Scene& scene, entityx::Entity player );
+	Gunship::Entity CreatePlayer( Gunship::Scene& scene );
+	Gunship::Entity CreateCursor( Gunship::Scene& scene, Gunship::Entity player );
 }

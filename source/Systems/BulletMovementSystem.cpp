@@ -1,4 +1,4 @@
-#include <entityx/Entity.h>
+#include <Entity/Entity.h>
 #include <Scene.h>
 #include <Components/Transform.h>
 
@@ -10,6 +10,7 @@ namespace Spectacle
 	void BulletMovementSystem::Update( Gunship::Scene& scene,
 	                                   float delta )
 	{
+/*
 		Bullet::Handle bullet;
 		Gunship::Components::Transform::Handle bulletTransform;
 		for ( auto entity : scene.entities()
@@ -20,5 +21,6 @@ namespace Spectacle
 
 			bulletTransform->Translate( bullet->velocity * delta );
 		}
+*/
 	}
 }

@@ -1,15 +1,16 @@
 #include <Components/FollowTargetLinear.h>
 
-Spectacle::FollowTargetLinear::FollowTargetLinear( Gunship::Components::Transform::Handle target,
+Spectacle::FollowTargetLinear::FollowTargetLinear( Gunship::Entity target,
                                                    Ogre::Vector3 offset,
                                                    float followSpeed)
-	: targetTransform( target ),
+	: target( target ),
 	  offset( offset ),
 	  followSpeed( followSpeed )
 {
 }
 
-Ogre::Vector3 Spectacle::FollowTargetLinear::desiredPosition()
+Gunship::Vector3 Spectacle::FollowTargetLinear::desiredPosition()
 {
-	return targetTransform->derivedPosition() + offset;
+	//return targetTransform->derivedPosition() + offset;
+	return Gunship::Vector3::ZERO;
 }
