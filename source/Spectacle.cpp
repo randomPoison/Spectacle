@@ -6,6 +6,7 @@
 #include <Components/Alarm.h>
 #include <Components/Transform.h>
 #include <Components/Mesh.h>
+#include <Components/Collider.h>
 #include <Systems/EnemyBehaviorSystem.h>
 #include <Utility/Random.h>
 
@@ -24,12 +25,14 @@
 
 namespace Spectacle
 {
+	using Gunship::Scene;
+	using Gunship::Entity;
 	using Gunship::Components::AlarmManager;
 	using Gunship::Components::TransformManager;
 	using Gunship::Components::MeshManager;
-	using Gunship::Entity;
+	using Gunship::Components::ColliderManager;
 
-	AlarmManager::AlarmID CreateBlock( Gunship::Scene& scene, float x, float y, float time )
+	AlarmManager::AlarmID CreateBlock( Scene& scene, float x, float y, float time )
 	{
 		auto& alarmManager = scene.componentManager< AlarmManager >();
 
@@ -43,13 +46,13 @@ namespace Spectacle
 		return alarmManager.Assign(
 			entity,
 			time,
-			[]( Gunship::Scene& scene, Gunship::Entity entity )
+			[]( Scene& scene, Gunship::Entity entity )
 			{
-					scene.entities().Destroy( entity );
+				scene.entities().Destroy( entity );
 			} );
 	}
 
-	void CreateTimedBlocks( Gunship::Scene& scene )
+	void CreateTimedBlocks( Scene& scene )
 	{
 		static float xOffset = -15.0f;
 		xOffset += 1.0f;
@@ -68,7 +71,7 @@ namespace Spectacle
 		}
 	}
 
-	void CreateReferenceBlocks( Gunship::Scene& scene )
+	void CreateReferenceBlocks( Scene& scene )
 	{
 		auto& alarmManager = scene.componentManager< AlarmManager >();
 
@@ -78,7 +81,7 @@ namespace Spectacle
 		}
 	}
 
-	void TimedBlocksReset( Gunship::Scene& scene, Gunship::Entity entity )
+	void TimedBlocksReset( Scene& scene, Gunship::Entity entity )
 	{
 		CreateTimedBlocks( scene );
 		scene.componentManager< AlarmManager >().Assign(
@@ -87,7 +90,7 @@ namespace Spectacle
 			TimedBlocksReset );
 	}
 
-	void ReferenceBlocksReset( Gunship::Scene& scene, Gunship::Entity entity )
+	void ReferenceBlocksReset( Scene& scene, Gunship::Entity entity )
 	{
 		CreateReferenceBlocks( scene );
 		scene.componentManager< AlarmManager >().Assign(
@@ -96,13 +99,13 @@ namespace Spectacle
 			ReferenceBlocksReset );
 	}
 
-	void StartCreateDestroyTest( Gunship::Scene& scene )
+	void StartCreateDestroyTest( Scene& scene )
 	{
 		scene.AddSystem< Systems::LevelManagerSystem >();
 		scene.AddSystem< Systems::CreateDestroySystem >();
 	}
 
-	void StartCircleMovementTest( Gunship::Scene& scene )
+	void StartCircleMovementTest( Scene& scene )
 	{
 		// Register managers.
 		scene.RegisterComponentManager< CircleMovementManager >( new CircleMovementManager );
@@ -121,15 +124,33 @@ namespace Spectacle
 		}
 	}
 
-	void InitializeScene( Gunship::Scene& scene )
+	void CreateCollidable( Scene& scene, float x, float y, float z )
+	{
+		auto& transformManager = scene.componentManager< TransformManager >();
+		auto& meshManager = scene.componentManager< MeshManager >();
+		auto& colliderManager = scene.componentManager< ColliderManager >();
+
+		// Create static cube with a sphere collider.
+		Entity entity = scene.entities().Create();
+		auto& transform = transformManager.Assign( entity );
+		transform.SetPosition( x, y, z );
+		meshManager.Assign( entity, "Cube.mesh" );
+		colliderManager.Assign( entity ).radius = 0.5f;
+	}
+
+	void StartCollisionTest( Scene& scene )
+	{
+		CreateCollidable( scene, 0.0f, 0.0f, 0.0f );
+		CreateCollidable( scene, 1.5f, 0.0f, 0.0f );
+	}
+
+	void InitializeScene( Scene& scene )
 	{
 		CreateCamera( scene );
 
 		//StartCreateDestroyTest( scene );
-		StartCircleMovementTest( scene );
-
-		//ReferenceBlocksReset( scene, scene.entities().Create() );
-		//TimedBlocksReset( scene, scene.entities().Create() );
+		//StartCircleMovementTest( scene );
+		StartCollisionTest( scene );
 	}
 }
 

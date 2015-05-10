@@ -31,7 +31,7 @@ void CircleMovementSystem::Update( Scene& scene, float delta )
 
 	for ( CircleMovement& circleMovement : circleManager )
 	{
-		Transform& transform = transformManager.Get( circleMovement.entityID );
+		Transform& transform = transformManager.Get( circleMovement.entity );
 
 		// Calculate the position of the cube.
 		circleMovement.offset += delta;

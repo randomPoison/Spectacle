@@ -14,8 +14,8 @@ namespace Spectacle
 		Gunship::Entity camera = scene.entities().Create();
 
 		Gunship::Components::Transform& cameraTransform =
-			scene.componentManager< Gunship::Components::TransformManager >().Assign( camera.id );
-		scene.componentManager< Gunship::Components::CameraManager >().Assign( camera.id ).camera->setFOVy( Ogre::Radian( 1.0471975512f ) );
+			scene.componentManager< Gunship::Components::TransformManager >().Assign( camera );
+		scene.componentManager< Gunship::Components::CameraManager >().Assign( camera ).camera->setFOVy( Ogre::Radian( 1.0471975512f ) );
 
 		cameraTransform.SetPosition( 0.0f, 0.0f, 30.0f );
 		cameraTransform.LookAt( 0.0f, 0.0f, 0.0f );
